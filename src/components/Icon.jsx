@@ -42,7 +42,7 @@ const Icon = ({ name, size }) => {
 			break;
 	}
 
-	return <img src={svgSource} alt={name} className={width} />;
+	return <img src={svgSource} alt={name} className={`inline ${width}`} />;
 };
 
 Icon.propTypes = {
