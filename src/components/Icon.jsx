@@ -6,43 +6,25 @@ import svgOptions from "../assets/icons/options.svg";
 import svgSettings from "../assets/icons/settings.svg";
 
 const Icon = ({ name, size }) => {
-	let svgSource;
-	let width;
+	const iconVariants = {
+		google: svgGoogle,
+		home: svgHome,
+		logout: svgLogout,
+		options: svgOptions,
+		settings: svgSettings,
+	};
+	const sizeVariants = {
+		base: "w-4",
+		"2xl": "w-6",
+	};
 
-	switch (name) {
-		case "google":
-			svgSource = svgGoogle;
-			break;
-		case "home":
-			svgSource = svgHome;
-			break;
-		case "logout":
-			svgSource = svgLogout;
-			break;
-		case "options":
-			svgSource = svgOptions;
-			break;
-		case "settings":
-			svgSource = svgSettings;
-			break;
-		default:
-			svgSource = svgHome;
-			break;
-	}
-
-	switch (size) {
-		case "base":
-			width = "w-4";
-			break;
-		case "2xl":
-			width = "w-6";
-			break;
-		default:
-			width = "w-4";
-			break;
-	}
-
-	return <img src={svgSource} alt={name} className={`inline ${width}`} />;
+	return (
+		<img
+			src={iconVariants[name]}
+			alt={name + " icon"}
+			className={`inline ${sizeVariants[size]}`}
+		/>
+	);
 };
 
 Icon.propTypes = {
