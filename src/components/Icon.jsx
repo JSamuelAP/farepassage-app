@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import svgGoogle from "../assets/icons/google.svg";
 import svgHome from "../assets/icons/home.svg";
 import svgLogout from "../assets/icons/logout.svg";
@@ -42,6 +43,12 @@ const Icon = ({ name, size }) => {
 	}
 
 	return <img src={svgSource} alt={name} className={width} />;
+};
+
+Icon.propTypes = {
+	name: PropTypes.oneOf(["google", "home", "logout", "options", "settings"])
+		.isRequired,
+	size: PropTypes.oneOf(["base", "2xl"]),
 };
 
 export default Icon;
