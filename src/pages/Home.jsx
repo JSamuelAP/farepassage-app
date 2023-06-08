@@ -4,8 +4,7 @@ function Home() {
 	return (
 		<>
 			<Navbar />
-
-			<div class="container mx-auto max-w-xl px-8"></div>
+			<div className="container mx-auto max-w-xl px-8"></div>
 		</>
 	);
 }
