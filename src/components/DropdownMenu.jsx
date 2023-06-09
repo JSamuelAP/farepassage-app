@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import AuthContext from "../context/AuthProvider";
 import Icon from "./Icon";
 import { Link } from "react-router-dom";
 
 const DropdownMenu = () => {
 	const [isVisible, setVisible] = useState(false);
 	const [isMounted, setMounted] = useState(false);
+	const { logout } = useContext(AuthContext);
 
 	const handleClick = () => {
 		setVisible(!isVisible);
@@ -39,7 +41,11 @@ const DropdownMenu = () => {
 					<Icon name="settings" />
 					<span className="ml-1">Ajustes</span>
 				</Link>
-				<Link to="/login" className="block px-4 py-2 hover:bg-primary-50">
+				<Link
+					to="/login"
+					className="block px-4 py-2 hover:bg-primary-50"
+					onClick={logout}
+				>
 					<Icon name="logout" />
 					<span className="ml-1">Cerrar sesión</span>
 				</Link>

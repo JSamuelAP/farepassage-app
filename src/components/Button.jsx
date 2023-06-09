@@ -1,7 +1,15 @@
 import PropTypes from "prop-types";
 import Icon from "./Icon";
 
-const Button = ({ color, size, fullWidth, icon, type, children }) => {
+const Button = ({
+	color,
+	size,
+	fullWidth,
+	icon,
+	type,
+	children,
+	handleClick,
+}) => {
 	const fullWidthClass = fullWidth ? "w-full" : "";
 	const colorVariants = {
 		primary: "bg-primary-400 hover:bg-primary-700 focus:ring-primary-200",
@@ -20,6 +28,7 @@ const Button = ({ color, size, fullWidth, icon, type, children }) => {
 			} font-bold text-neutral-800 focus:outline-none focus:ring-4 ${
 				colorVariants[color || "primary"]
 			} ${fullWidthClass}`}
+			onClick={handleClick}
 		>
 			{icon && <Icon name={icon} size={size === "big" ? "2xl" : "base"} />}
 			{children}
@@ -34,6 +43,7 @@ Button.propTypes = {
 	icon: PropTypes.oneOf(["google", "home", "options", "logout", "settings"]),
 	type: PropTypes.oneOf(["button", "submit", "reset"]),
 	children: PropTypes.node.isRequired,
+	handleClick: PropTypes.func,
 };
 
 export default Button;
