@@ -12,7 +12,7 @@ const Input = ({ placeholder, id }) => {
 	);
 };
 
-Input.prototype = {
+Input.propTypes = {
 	placeholder: PropTypes.string,
 	id: PropTypes.string,
 };

@@ -1,6 +1,5 @@
 import logo from "../assets/logos/Icon horizontal.svg";
 import DropdownMenu from "./DropdownMenu";
-import Icon from "./Icon";
 
 const Navbar = () => {
 	return (

@@ -7,6 +7,7 @@ const Footer = () => {
 					href="https://jsamuelap.github.io"
 					target="_blank"
 					className="hover:underline"
+					rel="noreferrer"
 				>
 					JSamuel
 				</a>

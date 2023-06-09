@@ -21,7 +21,7 @@ function Home() {
 							Descontar un pasaje
 						</Button>
 						<form className="mt-16">
-							<label className="text-sm" for="input-recarga">
+							<label className="text-sm" htmlFor="input-recarga">
 								Registrar recarga
 							</label>
 							<div className="mt-1 flex gap-x-2">

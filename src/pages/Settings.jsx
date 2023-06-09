@@ -20,7 +20,7 @@ function Settings() {
 						</p>
 						<form>
 							<div className="mb-4">
-								<label className="mb-1 block text-sm" for="input-saldo">
+								<label className="mb-1 block text-sm" htmlFor="input-saldo">
 									Saldo
 								</label>
 								<Input
@@ -29,7 +29,7 @@ function Settings() {
 								/>
 							</div>
 							<div className="mb-6">
-								<label className="mb-1 mt-4 block" for="input-tarifa">
+								<label className="mb-1 mt-4 block" htmlFor="input-tarifa">
 									Tarifa de pasaje
 								</label>
 								<Input placeholder="$ Precio de un pasaje" id="input-tarifa" />
