@@ -1,9 +1,16 @@
+import { Navigate } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../context/AuthProvider";
 import Navbar from "../components/Navbar";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 
 function Settings() {
+	const { user } = useContext(AuthContext);
+
+	if (!user) return <Navigate to="/" />;
+
 	return (
 		<>
 			<Navbar />

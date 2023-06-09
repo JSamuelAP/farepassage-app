@@ -1,9 +1,16 @@
+import { useContext } from "react";
+import AuthContext from "../context/AuthProvider";
+import { Navigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import Navbar from "../components/Navbar";
 
 function Home() {
+	const { user } = useContext(AuthContext);
+
+	if (!user) return <Navigate to="/login" />;
+
 	return (
 		<>
 			<Navbar />
