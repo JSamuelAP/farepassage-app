@@ -17,12 +17,18 @@ function Home() {
 			<div className="flex min-h-[calc(100vh-57px)] flex-col">
 				<main className="mb-14  flex-1 text-neutral-800">
 					<div className="container mx-auto max-w-xl px-8">
-						<p className="mt-14">Hola Usuario, tu saldo es de:</p>
+						<p className="mt-14">Hola {user.nombre}, tu saldo es de:</p>
 						<p className="mt-8 text-center text-7xl text-neutral-700">
-							$<span className="font-bold text-neutral-800">100.00</span>
+							$
+							<span className="font-bold text-neutral-800">
+								{user.saldo.toFixed(2)}
+							</span>
 						</p>
 						<p className="mb-8 mt-2 text-center">
-							<span className="font-bold">20</span> pasajes restantes
+							<span className="font-bold">
+								{Math.floor(user.saldo / user.tarifa)}
+							</span>{" "}
+							pasajes restantes
 						</p>
 						<Button size="big" fullWidth={true}>
 							Descontar un pasaje

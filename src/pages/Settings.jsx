@@ -19,11 +19,11 @@ function Settings() {
 					<div className="container mx-auto max-w-xl px-8">
 						<p className="mb-6 mt-16">
 							<img
-								src="https://placehold.co/24x24"
+								src={user.fotoURL}
 								alt="Foto de perfil del usuario"
 								className="mr-2 inline-block w-6 rounded-full"
 							/>
-							Nombre de usuario
+							{user.nombre}
 						</p>
 						<form>
 							<div className="mb-4">
@@ -31,6 +31,7 @@ function Settings() {
 									Saldo
 								</label>
 								<Input
+									value={user.saldo}
 									placeholder="$ Saldo actual de tu tarjeta"
 									id="input-saldo"
 								/>
@@ -39,12 +40,16 @@ function Settings() {
 								<label className="mb-1 mt-4 block" htmlFor="input-tarifa">
 									Tarifa de pasaje
 								</label>
-								<Input placeholder="$ Precio de un pasaje" id="input-tarifa" />
+								<Input
+									value={user.tarifa}
+									placeholder="$ Precio de un pasaje"
+									id="input-tarifa"
+								/>
 							</div>
 							<div className="flex gap-x-2">
 								<div className="basis-1/2">
 									<Button color="secondary" fullWidth={true} type="reset">
-										Registrar
+										Cancelar
 									</Button>
 								</div>
 								<div className="basis-1/2">
