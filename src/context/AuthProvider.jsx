@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 import { auth, db } from "../firebase/firebase";
 import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import PropTypes from "prop-types";
 
 const AuthContext = createContext();
@@ -45,6 +45,10 @@ const AuthProvider = ({ children }) => {
 		setUser(null);
 		await signOut(auth);
 	};
+
+	// Escuchar cambios en los datos del usuario en timpo real
+	if (user)
+		onSnapshot(doc(db, "usuarios", user.userID), (doc) => setUser(doc.data()));
 
 	return (
 		<AuthContext.Provider value={{ user, login, logout }}>

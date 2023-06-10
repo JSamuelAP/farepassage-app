@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import Navbar from "../components/Navbar";
+import { descontarPasaje } from "../firebase/queries";
 
 function Home() {
 	const { user } = useContext(AuthContext);
@@ -30,7 +31,12 @@ function Home() {
 							</span>{" "}
 							pasajes restantes
 						</p>
-						<Button size="big" fullWidth={true}>
+						<Button
+							size="big"
+							fullWidth={true}
+							handleClick={() => descontarPasaje(user)}
+							disabled={user.saldo < user.tarifa}
+						>
 							Descontar un pasaje
 						</Button>
 						<form className="mt-16">

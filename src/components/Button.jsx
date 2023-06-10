@@ -8,11 +8,13 @@ const Button = ({
 	icon,
 	type,
 	children,
+	disabled,
 	handleClick,
 }) => {
 	const fullWidthClass = fullWidth ? "w-full" : "";
 	const colorVariants = {
-		primary: "bg-primary-400 hover:bg-primary-700 focus:ring-primary-200",
+		primary:
+			"bg-primary-400 hover:bg-primary-700 focus:ring-primary-200 disabled:bg-primary-200",
 		secondary: "bg-slate-200 hover:bg-slate-300 focus:ring-slate-100",
 	};
 	const sizeVariants = {
@@ -27,8 +29,9 @@ const Button = ({
 				sizeVariants[size || "normal"]
 			} font-bold text-neutral-800 focus:outline-none focus:ring-4 ${
 				colorVariants[color || "primary"]
-			} ${fullWidthClass}`}
+			} ${fullWidthClass} disabled:text-neutral-600`}
 			onClick={handleClick}
+			disabled={disabled || false}
 		>
 			{icon && <Icon name={icon} size={size === "big" ? "2xl" : "base"} />}
 			{children}
@@ -42,6 +45,7 @@ Button.propTypes = {
 	fullWidth: PropTypes.bool,
 	icon: PropTypes.oneOf(["google", "home", "options", "logout", "settings"]),
 	type: PropTypes.oneOf(["button", "submit", "reset"]),
+	disabled: PropTypes.bool,
 	children: PropTypes.node.isRequired,
 	handleClick: PropTypes.func,
 };
