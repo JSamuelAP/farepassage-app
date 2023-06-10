@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
-import { auth } from "../firebase/firebase";
+import { auth, db } from "../firebase/firebase";
 import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import PropTypes from "prop-types";
 
 const AuthContext = createContext();
@@ -12,8 +13,27 @@ const AuthProvider = ({ children }) => {
 		const provider = new GoogleAuthProvider();
 
 		try {
+			// Abrir una ventana para iniciar sesión con Google
 			const result = await signInWithPopup(auth, provider);
-			setUser(result.user);
+			const user = result.user;
+			// Buscar el documento del usuario autenticado
+			const docRef = doc(db, "usuarios", user.uid);
+			const docSnap = await getDoc(docRef);
+
+			// Si existe, tomarlo
+			if (docSnap.exists()) setUser(docSnap.data());
+			// Si no existe, crearlo
+			else {
+				const newUser = {
+					userID: user.uid,
+					nombre: user.displayName,
+					fotoURL: user.photoURL,
+					saldo: 0.0,
+					tarifa: 5.0,
+				};
+				setDoc(doc(db, "usuarios", user.uid), newUser);
+				setUser(newUser);
+			}
 		} catch (error) {
 			const errorCode = error.code;
 			const errorMessage = error.message;
