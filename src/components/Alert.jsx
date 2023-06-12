@@ -8,7 +8,7 @@ const Alert = ({ hidde, children }) => {
 	);
 };
 
-Alert.prototype = {
+Alert.propTypes = {
 	hidde: PropTypes.bool,
 	children: PropTypes.node.isRequired,
 };

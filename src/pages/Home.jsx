@@ -10,11 +10,10 @@ import useAlert from "../hooks/useAlert";
 
 function Home() {
 	const { user } = useContext(AuthContext);
-
-	if (!user) return <Navigate to="/login" />;
-
 	const [recarga, setRecarga] = useState("");
 	const [Alert, showAlert] = useAlert();
+
+	if (!user) return <Navigate to="/login" />;
 
 	const handleClick = () => {
 		if (!recarga || recarga <= 0) return;
