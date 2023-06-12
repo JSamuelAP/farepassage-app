@@ -21,7 +21,7 @@ function Settings() {
 							<img
 								src={user.fotoURL}
 								alt="Foto de perfil del usuario"
-								className="mr-2 inline-block w-6 rounded-full"
+								className="mr-2 inline-block h-6 w-6 overflow-hidden rounded-full"
 							/>
 							{user.nombre}
 						</p>
