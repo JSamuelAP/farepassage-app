@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import Navbar from "../components/Navbar";
 import { descontarPasaje, recargarPasaje } from "../firebase/queries";
+import useAlert from "../hooks/useAlert";
 
 function Home() {
 	const { user } = useContext(AuthContext);
@@ -13,11 +14,13 @@ function Home() {
 	if (!user) return <Navigate to="/login" />;
 
 	const [recarga, setRecarga] = useState("");
+	const [Alert, showAlert] = useAlert();
 
 	const handleClick = () => {
 		if (!recarga || recarga <= 0) return;
 
 		recargarPasaje(user, recarga);
+		showAlert(`Recarga de $${recarga} registrada`);
 		setRecarga("");
 	};
 
@@ -48,7 +51,7 @@ function Home() {
 						>
 							Descontar un pasaje
 						</Button>
-						<form className="mt-16">
+						<form className="mb-6 mt-16">
 							<label className="text-sm" htmlFor="input-recarga">
 								Registrar recarga
 							</label>
@@ -72,6 +75,9 @@ function Home() {
 								</div>
 							</div>
 						</form>
+						<div>
+							<Alert />
+						</div>
 					</div>
 				</main>
 				<Footer />
