@@ -8,4 +8,11 @@ const descontarPasaje = async (user) => {
 	});
 };
 
-export { descontarPasaje };
+const recargarPasaje = async (user, recarga) => {
+	const userRef = doc(db, "usuarios", user.userID);
+	await updateDoc(userRef, {
+		saldo: increment(recarga),
+	});
+};
+
+export { descontarPasaje, recargarPasaje };

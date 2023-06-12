@@ -1,16 +1,25 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "../context/AuthProvider";
 import { Navigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import Navbar from "../components/Navbar";
-import { descontarPasaje } from "../firebase/queries";
+import { descontarPasaje, recargarPasaje } from "../firebase/queries";
 
 function Home() {
 	const { user } = useContext(AuthContext);
 
 	if (!user) return <Navigate to="/login" />;
+
+	const [recarga, setRecarga] = useState("");
+
+	const handleClick = () => {
+		if (!recarga || recarga <= 0) return;
+
+		recargarPasaje(user, recarga);
+		setRecarga("");
+	};
 
 	return (
 		<>
@@ -45,10 +54,19 @@ function Home() {
 							</label>
 							<div className="mt-1 flex gap-x-2">
 								<div className="basis-7/12">
-									<Input placeholder="$ Cantidad" id="input-recarga" />
+									<Input
+										placeholder="$ Cantidad"
+										id="input-recarga"
+										value={recarga}
+										handleChange={(value) => setRecarga(value)}
+									/>
 								</div>
 								<div className="basis-5/12">
-									<Button color="secondary" fullWidth={true} type="submit">
+									<Button
+										color="secondary"
+										fullWidth={true}
+										handleClick={handleClick}
+									>
 										Registrar
 									</Button>
 								</div>
