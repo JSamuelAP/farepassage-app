@@ -10,12 +10,12 @@ import { actualizarSaldo, actualizarTarifa } from "../firebase/queries";
 
 function Settings() {
 	const { user } = useAuth();
+	const [saldo, setSaldo] = useState(user?.saldo);
+	const [tarifa, setTarifa] = useState(user?.tarifa);
 	const [AlertSaldo, showAlertSaldo] = useAlert();
 	const [AlertTarifa, showAlertTarifa] = useAlert();
 
 	if (!user) return <Navigate to="/" />;
-	const [saldo, setSaldo] = useState(user.saldo);
-	const [tarifa, setTarifa] = useState(user.tarifa);
 
 	const handleClickCancelar = () => {
 		setSaldo(user.saldo);
