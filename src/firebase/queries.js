@@ -18,9 +18,10 @@ const crearUsuario = async (user) => {
 };
 
 const descontarPasaje = async (user) => {
+	const nuevoSaldo = Number(user.saldo - user.tarifa).toFixed(2);
 	const userRef = doc(db, "usuarios", user.userID);
 	await updateDoc(userRef, {
-		saldo: increment(-user.tarifa),
+		saldo: Number(nuevoSaldo),
 	});
 };
 
