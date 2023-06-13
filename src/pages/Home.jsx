@@ -11,16 +11,22 @@ import { descontarPasaje, recargarPasaje } from "../firebase/queries";
 function Home() {
 	const { user } = useAuth();
 	const [recarga, setRecarga] = useState("");
+	const [error, setError] = useState("");
 	const [Alert, showAlert] = useAlert();
 
 	if (!user) return <Navigate to="/login" />;
 
 	const handleClick = () => {
-		if (!recarga || recarga <= 0) return;
+		if (!recarga || recarga == 0) return;
+		if (recarga < 0) {
+			setError("No se puede recargar un número negativo");
+			return;
+		}
 
 		recargarPasaje(user, recarga);
 		showAlert(`Recarga de $${recarga} registrada`);
 		setRecarga("");
+		setError("");
 	};
 
 	return (
@@ -61,6 +67,7 @@ function Home() {
 										id="input-recarga"
 										value={recarga}
 										handleChange={(value) => setRecarga(value)}
+										error={error}
 									/>
 								</div>
 								<div className="basis-5/12">

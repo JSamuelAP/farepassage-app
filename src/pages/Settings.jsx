@@ -12,6 +12,8 @@ function Settings() {
 	const { user } = useAuth();
 	const [saldo, setSaldo] = useState(user?.saldo);
 	const [tarifa, setTarifa] = useState(user?.tarifa);
+	const [errorSaldo, setErrorSaldo] = useState("");
+	const [errorTarifa, setErrorTarifa] = useState("");
 	const [AlertSaldo, showAlertSaldo] = useAlert();
 	const [AlertTarifa, showAlertTarifa] = useAlert();
 
@@ -20,12 +22,25 @@ function Settings() {
 	const handleClickCancelar = () => {
 		setSaldo(user.saldo);
 		setTarifa(user.tarifa);
+		setErrorSaldo("");
+		setErrorTarifa("");
 	};
 
 	const handleClickActualizar = () => {
 		setSaldo(Number(saldo));
 		setTarifa(Number(tarifa));
-		if (!saldo || !tarifa || saldo < 0 || tarifa <= 0) return;
+		setErrorSaldo("");
+		setErrorTarifa("");
+
+		if (!saldo || !tarifa) return;
+		if (saldo < 0) {
+			setErrorSaldo("El saldo no puede ser negativo");
+			return;
+		}
+		if (tarifa <= 0) {
+			setErrorTarifa("La tarifa no puede ser negativa o 0");
+			return;
+		}
 
 		if (saldo !== user.saldo) {
 			actualizarSaldo(user.userID, saldo);
@@ -63,6 +78,7 @@ function Settings() {
 									id="input-saldo"
 									value={saldo}
 									handleChange={(value) => setSaldo(value)}
+									error={errorSaldo}
 								/>
 							</div>
 							<div className="mb-6">
@@ -74,6 +90,7 @@ function Settings() {
 									id="input-tarifa"
 									value={tarifa}
 									handleChange={(value) => setTarifa(value)}
+									error={errorTarifa}
 								/>
 							</div>
 							<div className="flex gap-x-2">
