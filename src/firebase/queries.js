@@ -31,4 +31,21 @@ const recargarPasaje = async (user, recarga) => {
 	});
 };
 
-export { getUsuario, crearUsuario, descontarPasaje, recargarPasaje };
+const actualizarSaldo = async (uid, saldo) => {
+	const userRef = doc(db, "usuarios", uid);
+	await updateDoc(userRef, { saldo: Number(saldo) });
+};
+
+const actualizarTarifa = async (uid, tarifa) => {
+	const userRef = doc(db, "usuarios", uid);
+	await updateDoc(userRef, { tarifa: Number(tarifa) });
+};
+
+export {
+	getUsuario,
+	crearUsuario,
+	descontarPasaje,
+	recargarPasaje,
+	actualizarSaldo,
+	actualizarTarifa,
+};

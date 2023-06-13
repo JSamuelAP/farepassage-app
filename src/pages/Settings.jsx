@@ -1,14 +1,43 @@
+import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import useAlert from "../hooks/useAlert";
 import Navbar from "../components/Navbar";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
+import { actualizarSaldo, actualizarTarifa } from "../firebase/queries";
 
 function Settings() {
 	const { user } = useAuth();
+	const [AlertSaldo, showAlertSaldo] = useAlert();
+	const [AlertTarifa, showAlertTarifa] = useAlert();
 
 	if (!user) return <Navigate to="/" />;
+	const [saldo, setSaldo] = useState(user.saldo);
+	const [tarifa, setTarifa] = useState(user.tarifa);
+
+	const handleClickCancelar = () => {
+		setSaldo(user.saldo);
+		setTarifa(user.tarifa);
+	};
+
+	const handleClickActualizar = () => {
+		setSaldo(Number(saldo));
+		setTarifa(Number(tarifa));
+		if (!saldo || !tarifa || saldo < 0 || tarifa <= 0) return;
+
+		if (saldo !== user.saldo) {
+			actualizarSaldo(user.userID, saldo);
+			setSaldo(Number(saldo));
+			showAlertSaldo("Saldo actualizado");
+		}
+		if (tarifa !== user.tarifa) {
+			actualizarTarifa(user.userID, tarifa);
+			setTarifa(Number(tarifa));
+			showAlertTarifa("Tarifa actualizada");
+		}
+	};
 
 	return (
 		<>
@@ -30,9 +59,10 @@ function Settings() {
 									Saldo
 								</label>
 								<Input
-									value={user.saldo}
 									placeholder="$ Saldo actual de tu tarjeta"
 									id="input-saldo"
+									value={saldo}
+									handleChange={(value) => setSaldo(value)}
 								/>
 							</div>
 							<div className="mb-6">
@@ -40,24 +70,33 @@ function Settings() {
 									Tarifa de pasaje
 								</label>
 								<Input
-									value={user.tarifa}
 									placeholder="$ Precio de un pasaje"
 									id="input-tarifa"
+									value={tarifa}
+									handleChange={(value) => setTarifa(value)}
 								/>
 							</div>
 							<div className="flex gap-x-2">
 								<div className="basis-1/2">
-									<Button color="secondary" fullWidth={true} type="reset">
+									<Button
+										color="secondary"
+										fullWidth={true}
+										handleClick={handleClickCancelar}
+									>
 										Cancelar
 									</Button>
 								</div>
 								<div className="basis-1/2">
-									<Button fullWidth={true} type={"submit"}>
+									<Button fullWidth={true} handleClick={handleClickActualizar}>
 										Actualizar
 									</Button>
 								</div>
 							</div>
 						</form>
+						<div className="mt-8 flex flex-col gap-2">
+							<AlertSaldo />
+							<AlertTarifa />
+						</div>
 					</div>
 				</main>
 				<Footer />
