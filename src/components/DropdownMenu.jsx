@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from "react";
-import AuthContext from "../context/AuthProvider";
-import Icon from "./Icon";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import Icon from "./Icon";
 
 const DropdownMenu = () => {
 	const [isVisible, setVisible] = useState(false);
 	const [isMounted, setMounted] = useState(false);
-	const { logout } = useContext(AuthContext);
+	const { logout } = useAuth();
 
 	const handleClick = () => {
 		setVisible(!isVisible);

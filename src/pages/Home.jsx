@@ -1,15 +1,15 @@
-import { useContext, useState } from "react";
-import AuthContext from "../context/AuthProvider";
+import { useState } from "react";
 import { Navigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import useAlert from "../hooks/useAlert";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import Navbar from "../components/Navbar";
 import { descontarPasaje, recargarPasaje } from "../firebase/queries";
-import useAlert from "../hooks/useAlert";
 
 function Home() {
-	const { user } = useContext(AuthContext);
+	const { user } = useAuth();
 	const [recarga, setRecarga] = useState("");
 	const [Alert, showAlert] = useAlert();
 

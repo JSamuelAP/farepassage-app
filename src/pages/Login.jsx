@@ -1,11 +1,10 @@
-import { useContext } from "react";
-import AuthContext from "../context/AuthProvider";
 import { Navigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 import logo from "../assets/logos/Icon vertical.svg";
 import Button from "../components/Button";
 
 function Login() {
-	const { user, login } = useContext(AuthContext);
+	const { user, login } = useAuth();
 
 	if (user) return <Navigate to="/" />;
 

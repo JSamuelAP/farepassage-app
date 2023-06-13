@@ -1,8 +1,14 @@
-import { createContext, useState } from "react";
-import { auth, db } from "../firebase/firebase";
-import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
-import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
+import { createContext, useEffect, useState } from "react";
+import {
+	signInWithPopup,
+	GoogleAuthProvider,
+	signOut,
+	onAuthStateChanged,
+} from "firebase/auth";
+import { doc, onSnapshot } from "firebase/firestore";
 import PropTypes from "prop-types";
+import { auth, db } from "../firebase/firebase";
+import { crearUsuario, getUsuario } from "../firebase/queries";
 
 const AuthContext = createContext();
 
@@ -17,23 +23,9 @@ const AuthProvider = ({ children }) => {
 			const result = await signInWithPopup(auth, provider);
 			const user = result.user;
 			// Buscar el documento del usuario autenticado
-			const docRef = doc(db, "usuarios", user.uid);
-			const docSnap = await getDoc(docRef);
-
-			// Si existe, tomarlo
-			if (docSnap.exists()) setUser(docSnap.data());
+			const docSnap = await getUsuario(user.uid);
 			// Si no existe, crearlo
-			else {
-				const newUser = {
-					userID: user.uid,
-					nombre: user.displayName,
-					fotoURL: user.photoURL,
-					saldo: 0.0,
-					tarifa: 5.0,
-				};
-				setDoc(doc(db, "usuarios", user.uid), newUser);
-				setUser(newUser);
-			}
+			if (!docSnap.exists()) await crearUsuario(user);
 		} catch (error) {
 			const errorCode = error.code;
 			const errorMessage = error.message;
@@ -41,14 +33,29 @@ const AuthProvider = ({ children }) => {
 		}
 	};
 
-	const logout = async () => {
-		setUser(null);
-		await signOut(auth);
-	};
+	const logout = async () => await signOut(auth);
 
-	// Escuchar cambios en los datos del usuario en timpo real
-	if (user)
-		onSnapshot(doc(db, "usuarios", user.userID), (doc) => setUser(doc.data()));
+	useEffect(() => {
+		let unsubscribeDB;
+		// Obtener los datos del usuario autentificado
+		const getData = async (uid) => setUser((await getUsuario(uid)).data());
+		// Escuchar cambios en la autenticación
+		const unsubscribeAuth = onAuthStateChanged(auth, (currentUser) => {
+			if (currentUser) {
+				getData(currentUser.uid);
+				// Escuchar cambios en los datos del usuario en timpo real
+				unsubscribeDB = onSnapshot(
+					doc(db, "usuarios", currentUser.uid),
+					(doc) => setUser(doc.data())
+				);
+			} else setUser(null);
+		});
+		// Dejar de escuchar cambios en la autenticación y en los datos
+		return () => {
+			unsubscribeAuth();
+			unsubscribeDB && unsubscribeDB();
+		};
+	}, []);
 
 	return (
 		<AuthContext.Provider value={{ user, login, logout }}>

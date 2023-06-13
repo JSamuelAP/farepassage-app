@@ -1,13 +1,12 @@
 import { Navigate } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "../context/AuthProvider";
+import useAuth from "../hooks/useAuth";
 import Navbar from "../components/Navbar";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import Footer from "../components/Footer";
 
 function Settings() {
-	const { user } = useContext(AuthContext);
+	const { user } = useAuth();
 
 	if (!user) return <Navigate to="/" />;
 
