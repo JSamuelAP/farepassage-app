@@ -67,6 +67,7 @@ function Home() {
 										id="input-recarga"
 										value={recarga}
 										handleChange={(value) => setRecarga(value)}
+										step={10}
 										error={error}
 									/>
 								</div>

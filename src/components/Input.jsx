@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const Input = ({ value, placeholder, id, handleChange, error }) => {
+const Input = ({ value, placeholder, id, handleChange, step, error }) => {
 	return (
 		<>
 			<input
@@ -14,6 +14,7 @@ const Input = ({ value, placeholder, id, handleChange, error }) => {
 						: "text-neutral-600 ring-neutral-200 focus:ring-primary-200"
 				}`}
 				min="0"
+				step={step || 1}
 				onChange={(e) => handleChange(e.target.value)}
 			/>
 			{error && <p className="mt-1 text-xs text-red-500">{error}</p>}
@@ -26,6 +27,7 @@ Input.propTypes = {
 	placeholder: PropTypes.string,
 	id: PropTypes.string,
 	handleChange: PropTypes.func,
+	step: PropTypes.number,
 	error: PropTypes.string,
 };
 

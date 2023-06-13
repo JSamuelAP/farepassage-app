@@ -90,6 +90,7 @@ function Settings() {
 									id="input-tarifa"
 									value={tarifa}
 									handleChange={(value) => setTarifa(value)}
+									step={0.1}
 									error={errorTarifa}
 								/>
 							</div>
