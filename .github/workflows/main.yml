@@ -15,9 +15,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@main
       - name: Install dependencies
-        uses: npm ci
+        run: npm ci
       - name: Build dependencies
-        uses: npm run build
+        run: npm run build
       - name: Archive production artifact
         uses: actions/upload-artifact@main
         with:
