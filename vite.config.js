@@ -19,7 +19,7 @@ export default defineConfig({
 				description: "Lleva un seguimiento de tu tarjeta de transporte público",
 				categories: ["navigation", "productivity", "travel", "lifestyle"],
 				lang: "es-mx",
-				orientation: "landscape",
+				orientation: "portrait",
 				theme_color: "#faca50",
 				background_color: "#ffffff",
 				icons: [
